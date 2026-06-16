@@ -7,7 +7,9 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "predeploy": "npm run generate && rm -rf out && mkdir -p out && cp -R .output/public/. out && touch out/.nojekyll",
+    "deploy": "gh-pages -d out -t"
   },
   "dependencies": {
     "@primeuix/themes": "^2.0.3",
@@ -23,6 +25,7 @@
   },
   "devDependencies": {
     "@types/node": "^25.9.3",
+    "gh-pages": "^6.3.0",
     "sass-embedded": "^1.100.0"
   }
 }
