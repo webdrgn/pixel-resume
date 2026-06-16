@@ -1,0 +1,38 @@
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Prepare clean npm config
+        run: |
+          rm -f "$GITHUB_WORKSPACE/.npmrc"
+          printf "registry=https://registry.npmjs.org/\nalways-auth=false\n" > "$GITHUB_WORKSPACE/.npmrc"
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund --userconfig "$GITHUB_WORKSPACE/.npmrc"
+      - run: npm run generate
+      - run: touch .output/public/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .output/public
+
+      - uses: actions/deploy-pages@v4
