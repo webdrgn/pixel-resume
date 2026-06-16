@@ -1,0 +1,194 @@
+@import "tailwindcss";
+@import "tailwindcss-primeui";
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+@theme {
+  --animate-screen-enter: screen-enter 420ms ease both;
+  --animate-art-float: art-float 3s ease-in-out infinite;
+  --animate-panel-rise: panel-rise 360ms ease both;
+  --animate-pulse-text: pulse-text 1.6s ease-in-out infinite;
+  --animate-answer-enter: answer-enter 360ms ease both;
+  --animate-rec-blink: rec-dot-blink 1s steps(2, end) infinite;
+  --animate-status-pulse: status-pulse 1.4s steps(2, end) infinite;
+  --animate-pixel-loader: pixel-loader-wave 1.2s ease-in-out infinite;
+}
+
+@layer base {
+  html {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+  }
+
+  body {
+    @apply min-h-screen bg-slate-950 text-slate-100;
+    background-image: radial-gradient(ellipse 80% 50% at 50% -10%, rgb(16 185 129 / 8%), transparent);
+    -webkit-font-smoothing: none;
+  }
+
+  ::selection {
+    @apply bg-emerald-600 text-slate-100;
+  }
+}
+
+.page-enter-active,
+.page-leave-active {
+  @apply transition-[opacity,transform] duration-300 ease-out;
+}
+
+.page-enter-from,
+.page-leave-to {
+  @apply opacity-0 translate-y-2.5;
+}
+
+@keyframes screen-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes art-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes pulse-text {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes panel-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes answer-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes rec-dot-blink {
+  0%,
+  100% {
+    opacity: 1;
+    background-color: var(--color-red-500);
+  }
+
+  50% {
+    opacity: 0.25;
+    background-color: var(--color-red-900);
+  }
+}
+
+@keyframes status-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes pixel-loader-wave {
+  0%,
+  80%,
+  100% {
+    background-color: var(--color-emerald-900);
+  }
+
+  40% {
+    background-color: var(--color-emerald-400);
+  }
+}
+
+@layer components {
+  .p-button {
+    @apply rounded-none border-2 border-black font-[inherit] text-[11px] leading-snug shadow-none;
+    transition:
+      background 120ms steps(4, end),
+      transform 120ms steps(4, end),
+      opacity 180ms ease;
+  }
+
+  .p-button:not(:disabled):hover {
+    @apply -translate-y-px;
+  }
+
+  .p-button:not(:disabled):active {
+    @apply translate-y-px;
+  }
+
+  .p-button:disabled {
+    @apply cursor-not-allowed opacity-45;
+  }
+
+  .p-textarea {
+    @apply w-full min-h-[120px] resize-y rounded-none border-2 border-black bg-slate-900 p-3 text-[11px] leading-relaxed text-slate-100 transition-[border-color,box-shadow] duration-180 ease-out;
+  }
+
+  .p-textarea::placeholder {
+    @apply text-slate-500;
+  }
+
+  .p-textarea:enabled:hover {
+    @apply border-slate-700;
+  }
+
+  .p-textarea:enabled:focus {
+    @apply border-emerald-600 outline-none ring-[3px] ring-emerald-600;
+  }
+
+  .question-panel__typed:empty::after {
+    content: "▌";
+    @apply text-emerald-400;
+    animation: caret-blink 1s steps(2, end) infinite;
+  }
+
+  .question-panel__answer .p-button-label {
+    @apply whitespace-normal text-left leading-snug font-[inherit];
+  }
+}
+
+@keyframes caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}

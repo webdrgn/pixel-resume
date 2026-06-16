@@ -1,0 +1,27 @@
+{
+  "name": "pixel-resume",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@primeuix/themes": "^2.0.3",
+    "@primevue/nuxt-module": "^4.5.5",
+    "@tailwindcss/postcss": "^4.3.1",
+    "nuxt": "^4.4.8",
+    "postcss": "^8.5.15",
+    "primevue": "^4.5.5",
+    "tailwindcss": "^4.3.1",
+    "tailwindcss-primeui": "^0.6.1",
+    "vue": "^3.5.35",
+    "vue-router": "^5.1.0"
+  },
+  "devDependencies": {
+    "sass-embedded": "^1.100.0"
+  }
+}
