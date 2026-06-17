@@ -129,15 +129,18 @@
   </div>
 </template>
 
-<script setup>
-import game from '~/storage/game.json'
+<script setup lang="ts">
+import { useAPI } from '~/composables/api/useApi';
+import type { IGame } from '~/types/stages';
+
+const { data: game } = await useAPI<IGame>('/api/game?gameId=1')
 
 useHead({
   title: 'Итоги собеседования'
 })
 
-const interviewOutcome = game.final
-const outreachOffer = game.offer
+const interviewOutcome = game.value?.final
+const outreachOffer = game.value?.offer
 
 const ratingCaptions = {
   tech: 'Техника',
@@ -146,7 +149,7 @@ const ratingCaptions = {
   communication: 'Коммуникация'
 }
 
-const ratingRows = Object.entries(interviewOutcome.ratings).map(
+const ratingRows = Object.entries(game.value?.final.ratings).map(
   ([ratingId, scoreText]) => {
     const [filledCount, totalCount] = scoreText.split('/').map(Number)
 

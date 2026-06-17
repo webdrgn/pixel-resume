@@ -12,9 +12,7 @@
         />
         <span>REC · собеседование</span>
       </span>
-      <span
-        class="game-caption text-right text-slate-400 max-sm:text-left"
-      >
+      <span class="game-caption text-right text-slate-400 max-sm:text-left">
         {{ currentStage?.name }}
         <br />
         Вопрос: {{ currentQuestion?.id }} / {{ currentStage?.questions.length }}
@@ -191,7 +189,7 @@ useHead({
 type SpeakerSide = 'hr' | 'candidate'
 
 const { currentStage, currentQuestion, isLastStageEnded, nextQuestion } =
-  useStages()
+  await useStages()
 const currentSpeaker = ref<SpeakerSide>('hr')
 const currentPrompt = ref(currentQuestion.value?.text ?? '')
 const animatedPrompt = ref('')

@@ -20,7 +20,7 @@
       class="readable-copy w-full border-4 border-black bg-slate-900 p-3.5 text-slate-300"
     >
       <p class="m-0 mb-3 text-balance text-slate-100">
-        <template v-for="(segment, segmentIndex) in candidate.story" :key="segmentIndex">
+        <template v-for="(segment, segmentIndex) in game?.candidate.story" :key="segmentIndex">
           <span
             :class="{
               'text-emerald-400': segment.highlight === 'name',
@@ -32,7 +32,7 @@
 
       <dl class="m-0 flex flex-col gap-2.5">
         <div
-          v-for="profileField in candidate.profile"
+          v-for="profileField in game?.candidate.profile"
           :key="profileField.label"
           class="grid grid-cols-[minmax(0,108px)_1fr] gap-2 border-t-2 border-black pt-2.5 first:border-t-0 first:pt-0"
         >
@@ -58,12 +58,13 @@
   </div>
 </template>
 
-<script setup>
-import game from '~/storage/game.json'
+<script setup lang="ts">
+import { useAPI } from '~/composables/api/useApi';
+import type { IGame } from '~/types/stages';
+
+const { data: game } = await useAPI<IGame>('/api/game?gameId=1')
 
 const { toNextScreen } = useScreenNavigate()
-
-const candidate = game.candidate
 
 useHead({
   title: 'Твоя роль',

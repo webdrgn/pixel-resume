@@ -1,7 +1,9 @@
-import game from "~/storage/game.json";
+import type { IGame } from "~/types/stages";
+import { useAPI } from "./api/useApi";
 
-export const useStages = () => {
-  const stages = computed(() => game?.stages);
+export const useStages = async () => {
+  const { data: game } = await useAPI<IGame>("/api/game?gameId=1");
+  const stages = computed(() => game.value?.stages);
   const currentStageId = ref(1);
   const currentQuestionId = ref(1);
   const isLastStageEnded = ref(false);
@@ -17,7 +19,7 @@ export const useStages = () => {
   );
 
   const isLastStage = computed(
-    () => currentStage.value?.id === stages.value.length,
+    () => currentStage.value?.id === stages.value?.length,
   );
 
   const nextStage = () => {
