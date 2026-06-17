@@ -20,15 +20,19 @@
       class="readable-copy w-full border-4 border-black bg-slate-900 p-3.5 text-slate-300"
     >
       <p class="m-0 mb-3 text-balance text-slate-100">
-        Ты — <span class="text-emerald-400">Василий</span>, 27 лет. Сегодня — собеседование, которое меняет всё.
-        Возьмут — через месяц ты пишешь код за деньги, а не «в портфолио». Сольёшься — снова отклики в пустоту.
-        <span class="text-yellow-300">Один созвон. 20 минут.</span>
-        Решает не сколько ты знаешь, а как ты это подашь.
+        <template v-for="(segment, segmentIndex) in candidate.story" :key="segmentIndex">
+          <span
+            :class="{
+              'text-emerald-400': segment.highlight === 'name',
+              'text-yellow-300': segment.highlight === 'emphasis',
+            }"
+          >{{ segment.text }}</span>
+        </template>
       </p>
 
       <dl class="m-0 flex flex-col gap-2.5">
         <div
-          v-for="profileField in candidateProfile"
+          v-for="profileField in candidate.profile"
           :key="profileField.label"
           class="grid grid-cols-[minmax(0,108px)_1fr] gap-2 border-t-2 border-black pt-2.5 first:border-t-0 first:pt-0"
         >
@@ -55,15 +59,11 @@
 </template>
 
 <script setup>
+import game from '~/storage/game.json'
+
 const { toNextScreen } = useScreenNavigate()
 
-const candidateProfile = [
-  { label: 'Опыт', detail: '1.5 года, junior+ frontend (React)' },
-  { label: 'Цель', detail: 'пройти собеседование и получить ответ от HR «оффер твой»' },
-  { label: 'Куда', detail: 'крупная tech-компания, нанимает разработчиков' },
-  { label: 'Сильные стороны', detail: 'упорный, быстро учится' },
-  { label: 'Слабые стороны', detail: 'волнуется, теряется в вопросах, есть пробелы в знаниях' },
-]
+const candidate = game.candidate
 
 useHead({
   title: 'Твоя роль',
